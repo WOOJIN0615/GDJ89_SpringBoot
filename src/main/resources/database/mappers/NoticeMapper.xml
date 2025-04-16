@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- WINDOWS - PREFERENCES - XML(WILD WEB DEVELOPER - DOWNLOAD EXTER... -->
+  	<mapper namespace="com.woojin.app.board.notice.NoticeDAO">
+  		<select id="getList" resultType="NoticeVO">
+  			SELECT * FROM NOTICE_TBL
+  		</select>
+  		
+  		<select id="getDetail" resultType="NoticeVO" parameterType="NoticeVO">
+  			SELECT * FROM NOTICE_TBL WHERE BOARDNUM=1
+  		</select>
+  		
+  		<insert id="add">
+  			INSERT INTO NOTICE_TBL VALUES (0, 'test1', 'test1', now(), 0, 'test1')
+  		</insert>
+  	</mapper>
