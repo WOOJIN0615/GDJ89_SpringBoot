@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+	/*implementation 'org.springframework.boot:spring-boot-starter-security'*/
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -27,20 +27,19 @@ dependencies {
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.4'
-	testImplementation 'org.springframework.security:spring-security-test'
+	//testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	
-	// https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api
-	compileOnly 'jakarta.servlet:jakarta.servlet-api:6.1.0'
-	
-	// https://mvnrepository.com/artifact/jakarta.servlet.jsp.jstl/jakarta.servlet.jsp.jstl-api
-	implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.2'
-	
 	// https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-jasper
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
-	
-	// https://mvnrepository.com/artifact/org.projectlombok/lombok
+	// https://mvnrepository.com/artifact/org.glassfish.web/jakarta.servlet.jsp.jstl
+	implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl'
+	implementation 'jakarta.servlet:jakarta.servlet-api' //스프링부트 3.0 이상
+    implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api' //스프링부트 3.0 이상
+    
+    //lombok
 	compileOnly 'org.projectlombok:lombok'
+  
+
 }
 
 tasks.named('test') {
