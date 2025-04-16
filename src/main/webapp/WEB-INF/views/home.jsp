@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>home</h1>
+	<h1>Home Gradle</h1>
+	<img alt="" src="/static/images/air.png">
 </body>
 </html>
