@@ -6,15 +6,63 @@
 
 <!-- WINDOWS - PREFERENCES - XML(WILD WEB DEVELOPER - DOWNLOAD EXTER... -->
   	<mapper namespace="com.woojin.app.board.notice.NoticeDAO">
-  		<select id="getList" resultType="NoticeVO">
+  		<select id="getList" resultType="NoticeVO" parameterType="Pager">
   			SELECT * FROM NOTICE_TBL
+  				<include refid="search"></include>
+  				ORDER BY BOARD_NUM DESC
+  				LIMIT #{startNum}, #{perPage}
   		</select>
   		
   		<select id="getDetail" resultType="NoticeVO" parameterType="NoticeVO">
-  			SELECT * FROM NOTICE_TBL WHERE BOARDNUM=1
+  			SELECT * FROM NOTICE_TBL WHERE BOARD_NUM=#{boardNum}
   		</select>
   		
-  		<insert id="add">
-  			INSERT INTO NOTICE_TBL VALUES (0, 'test1', 'test1', now(), 0, 'test1')
+  		
+  		<select id="getTotalCount" resultType="Long" parameterType="Pager">
+  			SELECT COUNT(BOARD_NUM) FROM NOTICE_TBL
+  					<include refid="search"></include>
+  		</select>
+  		
+  		<insert id="test" parameterType="java.util.List">
+  			<!-- 다중 insert -->
+	  			INSERT INTO NOTICE_TBL (BOARD_TITLE, BOARD_CONTENTS, BOARD_DATE, BOARD_HIT, USER_NAME) VALUES 
+  				<foreach collection="list" item="list" open="" separator=",">
+	  				(#{list.boardTitle}, #{list.boardContents}, NOW(), 0, #{list.userName})			
+  				</foreach>
   		</insert>
+  		
+  		<insert id="add" parameterType="NoticeVO">
+  			INSERT INTO NOTICE_TBL (BOARD_TITLE, BOARD_CONTENTS, BOARD_DATE, BOARD_HIT, USER_NAME) 
+  			VALUES (#{boardTitle}, #{boardContents}, NOW(), 0, 'test')
+  		</insert>
+  		
+  		<sql id="search">
+  		<where>
+  			<choose>
+  				<when test="kind == 'k1'">
+  					BOARD_TITLE
+  				</when>
+  				<when test="kind == 'k2'">
+  					BOARD_CONTENTS
+  				</when>
+  				<otherwise>
+  					USER_NAME
+  				</otherwise>
+  			</choose>
+  			LIKE CONCAT('%', #{search}, '%')
+  		</where>
+  		</sql>
+  		
+  		<update id="update" parameterType="NoticeVO">
+  			UPDATE NOTICE_TBL SET BOARD_TITLE=#{boardTitle}, BOARD_CONTENTS=#{boardContents} WHERE BOARD_NUM=#{boardNum}
+  		</update>
+  		
+  		<update id="updateHits" parameterType="NoticeVO">
+  			UPDATE NOTICE_TBL SET BOARD_HIT=BOARD_HIT+1 WHERE BOARD_NUM=#{boardNum}
+  		</update>
+  		
+  		<delete id="delete" parameterType="NoticeVO">
+  			DELETE FROM NOTICE_TBL WHERE BOARD_NUM=#{boardNum}
+  		</delete>
+  		
   	</mapper>
