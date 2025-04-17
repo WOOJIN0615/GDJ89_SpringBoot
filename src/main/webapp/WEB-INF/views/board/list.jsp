@@ -27,14 +27,14 @@
 								Example</h6>
 						</div>
 						<div class="card-body">
-						<form class="form-inline">
+						<form action="" class="form-inline">
 						  <div class="form-group mx-sm-3 mb-2">
-							<select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-								<option selected>제목</option>
-								<option value="1">내용</option>
-								<option value="2">제목+내용</option>
+							<select class="custom-select mr-sm-2" name="kind" id="inlineFormCustomSelect">
+								<option value="k1" ${pager.kind eq 'k1' ? 'selected' : ''}>제목</option>
+								<option value="k2" ${pager.kind eq 'k2' ? 'selected' : ''}>내용</option>
+								<option value="k3" ${pager.kind eq 'k3' ? 'selected' : ''}>작성자</option>
 							  </select>
-						    <input type="password" class="form-control" id="inputPassword2">
+						    <input type="text" class="form-control" id="search" name="search" value="${pager.search}">
 						  </div>
 						  <button type="submit" class="btn btn-primary mb-2">검색</button>
 						</form>
@@ -43,26 +43,23 @@
 									cellspacing="0">
 									<thead>
 										<tr>
-											<th>#</th>
-											<th>작성자</th>
+											<th style="width: 150px;">#</th>
+											<th style="width: 200px;">작성자</th>
 											<th>제목</th>
-											<th>내용</th>
-											<th>작성일</th>
-											<th>조회수</th>
+											<th style="width: 400px;">작성일</th>
+											<th style="width: 100px;">조회수</th>
 
 										</tr>
 									</thead>
 									<tbody>
 										<c:forEach items="${list}" var="l">
-											<tr>
+											<tr onclick="location.href='detail?boardNum=${l.boardNum}'">
 												<td>${l.boardNum}</td>
 												<td>${l.userName}</td>
 												<td>${l.boardTitle}</td>
-												<td>${l.boardContents}</td>
 												<td>${l.boardDate}</td>
 												<td>${l.boardHit}</td>
 											</tr>
-
 										</c:forEach>
 									</tbody>
 								</table>
@@ -71,21 +68,25 @@
 								<nav aria-label="Page navigation example">
 								  <ul class="pagination">
 								    <li class="page-item">
-								      <a class="page-link" href="#" aria-label="Previous">
-								        <span aria-hidden="true">&laquo;</span>
-								      </a>
+								      <a class="page-link pages" href="./list?page=${pager.start-1}&kind=${pager.kind}&search=${pager.search}" aria-label="Previous">
+										<span aria-hidden="true">&laquo;</span>
+									  </a>
 								    </li>
-								    <li class="page-item"><a class="page-link" href="#">1</a></li>
-								    <li class="page-item"><a class="page-link" href="#">2</a></li>
-								    <li class="page-item"><a class="page-link" href="#">3</a></li>
-								    <li class="page-item">
-								      <a class="page-link" href="#" aria-label="Next">
-								        <span aria-hidden="true">&raquo;</span>
-								      </a>
+									<c:forEach begin="${pager.start}" end="${pager.end}" var="i">
+										<li class="page-item"><a class="page-link pages" href="./list?page=${i}&kind=${pager.kind}&search=${pager.search}">${i}</a></li>
+									</c:forEach>
+								    <li class="page-item ${pager.endCheck ? 'disabled' : ''}">
+								      <a class="page-link pages" aria-label="Next" href="./list?page=${pager.end+1}&kind=${pager.kind}&search=${pager.search}">
+										  <span aria-hidden="true">&raquo;</span>
+									  </a>
 								    </li>
 								  </ul>
 								</nav>					
 							</div>
+							<div style="display: flex; justify-content: end;">
+								<a href="add" class="btn btn-primary mb-2">글쓰기</a>
+							</div>
+
 						</div>
 					</div>
 

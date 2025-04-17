@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.woojin.app.board.BoardService;
 import com.woojin.app.board.BoardVO;
+import com.woojin.app.home.util.Pager;
 
 @Service
 public class NoticeService implements BoardService {
@@ -15,21 +16,37 @@ public class NoticeService implements BoardService {
 	private NoticeDAO noticeDAO;
 
 	@Override
-	public List<BoardVO> getList() throws Exception {
-			List<BoardVO> ar = noticeDAO.getList();
+	public List<BoardVO> getList(Pager pager) throws Exception {
+		Long totalCount = noticeDAO.getTotalCount(pager);
+		System.out.println(totalCount);
+		pager.make(totalCount);
+		pager.makeNum();
+		List<BoardVO> ar = noticeDAO.getList(pager);
 		return ar;
 	}
 
 	@Override
 	public BoardVO getDetail(BoardVO boardVO) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		boardVO = noticeDAO.getDetail(boardVO);
+		return boardVO;
 	}
 
 	@Override
 	public int add(BoardVO boardVO) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = noticeDAO.add(boardVO);
+		return result;
+	}
+
+	@Override
+	public int update(BoardVO boardVO) throws Exception {
+			int result = noticeDAO.update(boardVO);
+		return result;
+	}
+
+	@Override
+	public int delete(BoardVO boardVO) throws Exception {
+			int result = noticeDAO.delete(boardVO);
+		return result;
 	}
 	
 	
