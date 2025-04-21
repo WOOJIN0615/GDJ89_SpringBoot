@@ -13,9 +13,26 @@
   				LIMIT #{startNum}, #{perPage}
   		</select>
   		
-  		<select id="getDetail" resultType="NoticeVO" parameterType="NoticeVO">
-  			SELECT * FROM NOTICE_TBL WHERE BOARD_NUM=#{boardNum}
+  		<select id="getDetail" resultMap="getImageDetail" parameterType="NoticeVO">
+			SELECT * FROM NOTICE_TBL
+			LEFT OUTER JOIN NOTICE_FILES_TBL
+			USING(BOARD_NUM)
+			WHERE BOARD_NUM = #{boardNum}
   		</select>
+  		
+  		<resultMap type="BoardVO" id="getImageDetail">
+  			<id column="BOARD_NUM" property="boardNum"/>
+  			<result column="BOARD_TITLE" property="boardTitle"/>
+  			<result column="BOARD_CONTENTS" property="boardContents"/>
+  			<result column="BOARD_DATE" property="boardDate"/>
+  			<result column="BOARD_HIT" property="boardHit"/>
+  			<result column="USER_NAME" property="userName"/>
+  			<collection property="boardFileVOs" javaType="List" ofType="BoardFileVO">
+  				<id column="FILE_NAME" property="fileName"/>
+  				<result column="OLD_NAME" property="oldName"/>
+  				<result column="FILE_NUM" property="fileNum"/>
+  			</collection>
+  		</resultMap>
   		
   		
   		<select id="getTotalCount" resultType="Long" parameterType="Pager">
@@ -31,9 +48,15 @@
   				</foreach>
   		</insert>
   		
-  		<insert id="add" parameterType="NoticeVO">
+  		<insert id="add" parameterType="NoticeVO" keyProperty="boardNum" useGeneratedKeys="true">
   			INSERT INTO NOTICE_TBL (BOARD_TITLE, BOARD_CONTENTS, BOARD_DATE, BOARD_HIT, USER_NAME) 
   			VALUES (#{boardTitle}, #{boardContents}, NOW(), 0, 'test')
+  		</insert>
+  		
+  		<insert id="addFile" parameterType="BoardFileVO">
+  			INSERT INTO NOTICE_FILES_TBL
+  			(FILE_NAME, OLD_NAME, BOARD_NUM)
+  			VALUES (#{fileName}, #{oldName}, #{boardNum})
   		</insert>
   		
   		<sql id="search">

@@ -19,7 +19,7 @@
 				<div class="container-fluid">
 					<!-- contents -->
 					 <h1>${kind}</h1>
-					 <form action="" method="post">
+					 <form action="" method="post" enctype="multipart/form-data">
 						 <div class="input-group mb-3">
 							 <input type="text" class="form-control" placeholder="제목" name="boardTitle" value="${dto.boardTitle}" aria-describedby="basic-addon1">
 						 </div>
@@ -28,6 +28,12 @@
 							   <span class="input-group-text">내용</span>
 							 </div>
 							 <textarea name="boardContents" id="contents" class="form-control" aria-label="With textarea" rows="10"></textarea>
+						</div>
+						
+						<div>
+							<input type="file" name="attaches"><br>
+							<input type="file" name="attaches"><br>
+							<input type="file" name="attaches">
 						</div>
 						   <button type="submit" class="btn btn-primary">작성</button>
 					 </form>

@@ -12,6 +12,8 @@ public interface BoardDAO {
 	
 	public int add(BoardVO boardVO) throws Exception;
 	
+	public int addFile(BoardFileVO boardFileVO) throws Exception;
+	
 	public Long getTotalCount(Pager pager) throws Exception;
 	
 	public int update(BoardVO boardVO) throws Exception;

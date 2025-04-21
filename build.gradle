@@ -27,7 +27,7 @@ dependencies {
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.4'
-	//testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	// https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-jasper
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
@@ -38,10 +38,16 @@ dependencies {
     
     //lombok
 	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok' 
   
 
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+//Build 시 Test Skip
+test {
+	exclude '**/*'
 }

@@ -37,7 +37,6 @@ public class Pager {
 		return this.page;
 	}
 	
-	
 	public void makeNum() throws Exception{
 		this.startNum=(this.getPage()-1)*this.perPage;
 	}
@@ -62,11 +61,8 @@ public class Pager {
 			curBlock++;
 		}
 		
-		Long start = (curBlock-1)*5+1;
-		Long end = curBlock*5;
-		
-		this.setStart(start);
-		this.setEnd(end);
+		this.setStart((curBlock-1)*5+1);
+		this.setEnd(curBlock*5);
 		
 		if (totalBlock==curBlock) {
 			this.setEnd(totalPage);

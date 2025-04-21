@@ -42,6 +42,9 @@
 					<div>
 						<div style="text-align: center;">
 							<h3>${dto.boardContents}</h3>
+							<c:forEach items="${dto.boardFileVOs}" var="f">
+								<img src="/files/${kind}/${f.fileName}">
+							</c:forEach>
 						</div>
 					</div>
 				</div>
